@@ -40,15 +40,6 @@ Desktop Install: ROS, RViz, demos, tutorials.
 Environment setup
 -----------------
 
-Sourcing the setup script
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Set up your environment by sourcing the following file.
-
-.. code-block:: bash
-
-   source /opt/ros/foxy/setup.bash
-
 Install argcomplete
 ^^^^^^^^^^^^^^^^^^^
 
@@ -68,6 +59,17 @@ Colcon is used to build ROS2 workspaces. See :ref:`this tutorial <install-colcon
 .. code-block:: bash
 
    sudo apt install python3-colcon-common-extensions
+
+Sourcing the setup script
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set up your environment by sourcing the following file.
+
+.. code-block:: bash
+
+   source /opt/ros/foxy/setup.bash
+
+You must source the setup script for every new terminal you open.
 
 Try some examples
 -----------------

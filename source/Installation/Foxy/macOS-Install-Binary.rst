@@ -161,6 +161,8 @@ Source the ROS 2 setup file:
 
 You make safely ignore a "connext_cmake_module" warning.
 
+You must source the setup script for every new terminal you open.
+
 Try some examples
 -----------------
 

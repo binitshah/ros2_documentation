@@ -220,6 +220,8 @@ Next, open a **new** PowerShell terminal, and source the ROS 2 setup file to set
 
     > C:\ci\ws\install\local_setup.ps1
 
+You must source the setup script for every new terminal you open.
+
 Try some examples
 -----------------
 
