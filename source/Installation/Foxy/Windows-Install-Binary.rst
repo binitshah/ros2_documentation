@@ -5,14 +5,6 @@ Installing ROS 2 on Windows
    :depth: 2
    :local:
 
-This page explains how to install ROS 2 on Windows from a pre-built binary package.
-
-.. note::
-
-    The pre-built binary does not include all ROS 2 packages.
-    All packages in the `ROS base variant <https://ros.org/reps/rep-2001.html#ros-base>`_ are included, and only a subset of packages in the `ROS desktop variant <https://ros.org/reps/rep-2001.html#desktop-variants>`_ are included.
-    The exact list of packages are described by the repositories listed in `this ros2.repos file <https://github.com/ros2/ros2/blob/foxy-release/ros2.repos>`_.
-
 System requirements
 -------------------
 
@@ -35,7 +27,7 @@ You'll use Chocolatey to install some other developer tools.
 Install Python
 ^^^^^^^^^^^^^^
 
-Open a Command Prompt and type the following to install Python via Chocolatey:
+Open a PowerShell terminal and type the following to install Python via Chocolatey:
 
 .. code-block:: bash
 
@@ -47,7 +39,7 @@ Double check that it is installed there.
 Install Visual C++ Redistributables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Open a Command Prompt and type the following to install them via Chocolatey:
+Open a PowerShell terminal and type the following to install them via Chocolatey:
 
 .. code-block:: bash
 
@@ -62,7 +54,7 @@ Don't download the Win32 or Light versions.
 
 Run the installer with default parameters.
 
-The following command sets an environment variable that persists over sessions.
+Open a PowerShell terminal with Administrative privileges. The following command sets an environment variable that persists over sessions.
 Modify the command to match your installation directory:
 
 * ``setx -m OPENSSL_CONF "C:\Program Files\OpenSSL-Win64\bin\openssl.cfg"``
@@ -86,16 +78,9 @@ Microsoft provides a free of charge version of Visual Studio 2019, named Communi
 
 Make sure that the Visual C++ features are installed.
 
-An easy way to make sure they're installed is to select the ``Desktop development with C++`` workflow during the install.
+An easy way to make sure they're installed is to select the ``Desktop development with C++`` workflow during the install. But make sure that no C++ CMake tools are installed by unselecting them in the list of components to be installed.
 
    .. image:: https://i.imgur.com/2h0IxCk.png
-
-Make sure that no C++ CMake tools are installed by unselecting them in the list of components to be installed.
-
-Install additional DDS implementations (optional)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you would like to use another DDS or RTPS vendor besides the default, eProsima's Fast RTPS, you can find instructions `here <../DDS-Implementations>`.
 
 Install OpenCV
 ^^^^^^^^^^^^^^
@@ -104,7 +89,7 @@ Some of the examples require OpenCV to be installed.
 
 You can download a precompiled version of OpenCV 3.4.6 from https://github.com/ros2/ros2/releases/download/opencv-archives/opencv-3.4.6-vc16.VS2019.zip .
 
-Assuming you unpacked it to ``C:\opencv``\ , type the following on a Command Prompt (requires Admin privileges):
+Assuming you unpacked it to ``C:\opencv``\ , type the following on a PowerShell terminal (requires Admin privileges):
 
 .. code-block:: bash
 
@@ -137,7 +122,7 @@ Please download these packages from `this <https://github.com/ros2/choco-package
 * tinyxml2.6.0.0.nupkg
 * log4cxx.0.10.0.nupkg
 
-Once these packages are downloaded, open an administrative shell and execute the following command:
+Once these packages are downloaded, open an PowerShell terminal with administrative privileges and execute the following command:
 
 .. code-block:: bash
 
@@ -171,7 +156,11 @@ You will need to append the Graphviz bin folder ``C:\Program Files (x86)\Graphvi
 Colcon
 ~~~~~~
 
-See :ref:`this tutorial <install-colcon>` to install colcon.
+Colcon is used to build ROS2 workspaces. See :ref:`this tutorial <install-colcon>` to learn how to use it.
+
+.. code-block:: bash
+
+   > pip install -U colcon-common-extensions
 
 Install Qt5
 ^^^^^^^^^^^
@@ -190,7 +179,7 @@ We're using ``5.15.0`` as of the writing of this document and that's what we rec
 For Foxy and later, be sure to select ``MSVC 2019 64-bit``.
 After that, the default settings are fine.
 
-Finally, set the ``Qt5_DIR`` environment variable in the ``cmd.exe`` (open as Administrator privileges) where you intend to build so that CMake can find it:
+Finally, set the ``Qt5_DIR`` environment variable in a PowerShell terminal (open as Administrator privileges) where you intend to build so that CMake can find it:
 
 .. code-block:: bash
 
@@ -204,55 +193,43 @@ Downloading ROS 2
 -----------------
 
 * Go the releases page: https://github.com/ros2/ros2/releases
-* Download the latest package for Windows, e.g., ``ros2-foxy-*-windows-AMD64.zip``.
+* Download the latest "release" package for Windows, e.g., ``ros2-foxy-*-windows-release-AMD64.zip``.
 
 .. note::
 
     There may be more than one binary download option which might cause the file name to differ.
-
-.. note::
-
-    To download the ROS 2 debug libraries you'll need to download ``ros2-foxy-*-windows-debug-AMD64.zip``
 
 * Unpack the zip file to ``C:\ci\ws\install``\ .
 
 Environment setup
 -----------------
 
-Start a command shell and source the ROS 2 setup file to set up the workspace:
+Navigate to the ROS 2 setup file using Windows Explorer, right click on ``local_setup.ps1``\, and select **Properties**. Then check unblock in file properties.
 
-.. tabs::
+ .. image:: https://i.imgur.com/nDipuaC.png
 
-  .. group-tab:: Command Prompt
+Open a PowerShell terminal with Administrative privileges. Run ``Install-module posh-vs`` and ``Install-PoshVs``.
 
-    .. code-block:: bash
+Next, create a folder within Documents called "WindowsPowerShell". Within the folder, create a file called "Microsoft.PowerShell_profile.ps1". Open the file for editing and add this text: "Import-VisualStudioEnvironment".
 
-       > call C:\ci\ws\install\local_setup.bat
+Once these steps above are completed, you won't need to do them again.
 
-  .. group-tab:: PowerShell
+Next, open a **new** PowerShell terminal, and source the ROS 2 setup file to set up the workspace. Run:
 
-   Navigate to the ROS 2 setup file using Windows Explorer, right click on ``local_setup.ps1``\, and select **Properties**. Then check unblock in file properties.
+ .. code-block:: bash
 
-    .. image:: https://i.imgur.com/nDipuaC.png
-
-   Once applied, you won't need to unblock the script again. To source the setup file, run:
-
-    .. code-block:: bash
-
-       > C:\ci\ws\install\local_setup.ps1
-
-It is normal that the previous command, if nothing else went wrong, outputs "The system cannot find the path specified." exactly once.
+    > C:\ci\ws\install\local_setup.ps1
 
 Try some examples
 -----------------
 
-In a command shell, set up the ROS 2 environment as described above and then run a C++ ``talker``\ :
+In a PowerShell terminal, set up the ROS 2 environment as described above and then run a C++ ``talker``\ :
 
 .. code-block:: bash
 
    > ros2 run demo_nodes_cpp talker
 
-Start another command shell and run a Python ``listener``\ :
+Start another PowerShell terminal and run a Python ``listener``\ :
 
 .. code-block:: bash
 
@@ -262,19 +239,9 @@ You should see the ``talker`` saying that it's ``Publishing`` messages and the `
 This verifies both the C++ and Python APIs are working properly.
 Hooray!
 
-
 Next steps after installing
 ---------------------------
 Continue with the `tutorials and demos </Tutorials>` to configure your environment, create your own workspace and packages, and learn ROS 2 core concepts.
-
-Using the ROS 1 bridge
-----------------------
-The ROS 1 bridge can connect topics from ROS 1 to ROS 2 and vice-versa. See the dedicated `documentation <https://github.com/ros2/ros1_bridge/blob/master/README.md>`__ on how to build and use the ROS 1 bridge.
-
-Additional RMW implementations (optional)
------------------------------------------
-The default middleware that ROS 2 uses is ``Fast-RTPS``, but the middleware (RMW) can be replaced at runtime.
-See the `tutorial </Tutorials/Working-with-multiple-RMW-implementations>` on how to work with multiple RMWs.
 
 Troubleshooting
 ---------------
@@ -292,50 +259,3 @@ Uninstall
    .. code-block:: bash
 
     rmdir /s /q \ros2_foxy
-
-(Alternative) ROS 2 Build Installation from aka.ms/ros
---------------------------------------------------------
-
-https://aka.ms/ros project hosts ROS 2 builds against the release snapshots.
-This section explains how to install ROS 2 from this channel.
-
-Install ROS 2 builds
-^^^^^^^^^^^^^^^^^^^^
-
-In an administrative command prompt, run the following commands.
-
-.. code-block:: bash
-
-   > mkdir c:\opt\chocolatey
-   > set PYTHONNOUSERSITE=1
-   > set ChocolateyInstall=c:\opt\chocolatey
-   > choco source add -n=ros-win -s="https://aka.ms/ros/public" --priority=1
-   > choco upgrade ros-foxy-desktop -y --execution-timeout=0
-
-Environment setup
-^^^^^^^^^^^^^^^^^^
-
-Start an administrative command prompt and source the ROS 2 setup file to set up the workspace:
-
-.. code-block:: bash
-
-   > call C:\opt\ros\foxy\x64\local_setup.bat
-
-Stay up-to-date
-^^^^^^^^^^^^^^^
-
-To keep up-to-date with the latest builds, run:
-
-.. code-block:: bash
-
-   > set ChocolateyInstall=c:\opt\chocolatey
-   > choco upgrade all -y --execution-timeout=0
-
-Uninstall
-^^^^^^^^^
-
-If you want to completely remove the environment downloaded above, run this command:
-
-.. code-block:: bash
-
-   > rmdir /s /q C:\opt\
