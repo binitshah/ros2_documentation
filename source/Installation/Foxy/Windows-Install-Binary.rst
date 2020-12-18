@@ -237,6 +237,7 @@ Start another PowerShell terminal and run a Python ``listener``\ :
 
    > ros2 run demo_nodes_py listener
 
+The first time these commands are run, Windows may ask whether you'd like to give these scripts networking privileges.
 You should see the ``talker`` saying that it's ``Publishing`` messages and the ``listener`` saying ``I heard`` those messages.
 This verifies both the C++ and Python APIs are working properly.
 Hooray!
