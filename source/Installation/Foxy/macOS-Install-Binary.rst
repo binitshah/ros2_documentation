@@ -9,14 +9,6 @@ Installing ROS 2 on macOS
    :depth: 2
    :local:
 
-This page explains how to install ROS 2 on macOS from a pre-built binary package.
-
-.. note::
-
-    The pre-built binary does not include all ROS 2 packages.
-    All packages in the `ROS base variant <https://ros.org/reps/rep-2001.html#ros-base>`_ are included, and only a subset of packages in the `ROS desktop variant <https://ros.org/reps/rep-2001.html#desktop-variants>`_ are included.
-    The exact list of packages are described by the repositories listed in `this ros2.repos file <https://github.com/ros2/ros2/blob/foxy-release/ros2.repos>`_.
-
 System requirements
 -------------------
 
@@ -91,8 +83,6 @@ You need the following things installed before installing ROS 2.
 *
   Install rqt dependencies
 
-  Fix some path names when looking for sip stuff during install (see `ROS 1 wiki <https://wiki.ros.org/kinetic/Installation/OSX/Homebrew/Source#Qt_naming_issue>`__):
-
   ``ln -s /usr/local/share/sip/Qt5 /usr/local/share/sip/PyQt5``
 
   ``brew install graphviz``
@@ -121,7 +111,11 @@ You need the following things installed before installing ROS 2.
        python3 -m pip install catkin_pkg empy ifcfg lark-parser lxml netifaces numpy pyparsing pyyaml setuptools argcomplete
 
 *
-  See :ref:`this tutorial <install-colcon>` to install colcon.
+  Colcon is used to build ROS2 workspaces. See :ref:`this tutorial <install-colcon>` to learn how to use it.
+
+  .. code-block:: bash
+
+       python3 -m pip install colcon-common-extensions
 
 Disable System Integrity Protection (SIP)
 -----------------------------------------
@@ -146,11 +140,6 @@ Downloading ROS 2
        cd ~/ros2_foxy
        tar xf ~/Downloads/ros2-release-distro-date-macos-amd64.tar.bz2
 
-Install additional DDS implementations (optional)
--------------------------------------------------
-
-If you would like to use another DDS or RTPS vendor besides the default, eProsima's Fast RTPS, you can find instructions `here <../DDS-Implementations>`.
-
 Environment setup
 -----------------
 
@@ -169,6 +158,8 @@ Source the ROS 2 setup file:
     .. code-block:: bash
 
        > . ~/ros2_foxy/ros2-osx/setup.zsh
+
+You make safely ignore a "connext_cmake_module" warning.
 
 Try some examples
 -----------------
@@ -193,15 +184,6 @@ Hooray!
 Next steps after installing
 ---------------------------
 Continue with the `tutorials and demos </Tutorials>` to configure your environment, create your own workspace and packages, and learn ROS 2 core concepts.
-
-Using the ROS 1 bridge
-----------------------
-The ROS 1 bridge can connect topics from ROS 1 to ROS 2 and vice-versa. See the dedicated `documentation <https://github.com/ros2/ros1_bridge/blob/master/README.md>`__ on how to build and use the ROS 1 bridge.
-
-Additional RMW implementations (optional)
------------------------------------------
-The default middleware that ROS 2 uses is ``Fast-RTPS``, but the middleware (RMW) can be replaced at runtime.
-See the `tutorial </Tutorials/Working-with-multiple-RMW-implementations>` on how to work with multiple RMWs.
 
 Troubleshooting
 ---------------
